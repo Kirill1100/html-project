@@ -1,0 +1,142 @@
+# By Kyrylo
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Как сделать Mini PC</title>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: rgb(0, 0, 0);
+        color: red;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      .container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+      }
+      .slide {
+        position: absolute;
+        width: auto;
+        opacity: 0;
+        transform: translateX(-100%);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .active {
+        opacity: 1;
+        transform: translateX(0);
+        position: relative;
+      }
+      .prev {
+        opacity: 0;
+        transform: translateX(0%);
+      }
+      .navigation {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        position: fixed;
+        bottom: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      button {
+        padding: 14px 50px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        background-color: red;
+        color: white;
+        border: 3px solid darkred;
+        border-radius: 12px;
+        transition: all 0.3s ease, transform 0.2s ease;
+      }
+      button:hover {
+        background-color: red;
+        color: black;
+        transform: scale(1.1);
+        box-shadow: 0 0 15px red;
+      }
+      button:active {
+        transform: scale(0.9);
+      }
+      img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="slide active" id="slide1">
+        <h1>Как собрать Mini PC</h1>
+        <h3>Это крутой проект на Arduino</h3>
+        <p>Я собрал это на макетной плате. Смотрите, как собрать по ссылке:</p>
+        <button onclick="window.open('https://wokwi.com/projects/421682277820350465', '_blank')">Project Link on wokwi</button>
+        <p> Что нам нужно:</p>
+        <p> Arduino Uno или Nano</p>
+        <h4> И ещё:</h4>
+        <p>Провода, паяльник, дисплей, кнопки, зуммер</p>
+      </div>
+      <div class="slide" id="slide2">
+        <h2>Что ещё можно добавить?</h2>
+        <p>Можно поставить датчики, Wi-Fi модуль и Bluetooth.</p>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9XAHPO2Aw2tLhoovzs36WGwiVB38a8GSk7A&s" alt="Sensor" height="200">
+        <img src="data:image/jpeg;base64,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" alt="Wi-Fi Module" height="200">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQEUtAt9LIGsGV3hWXtV0vZG-h6xSLkpgTVg&s" alt="Bluetooth Module" height="200">
+      </div>
+      <div class="slide" id="slide3">
+        <h2>Как собрать корпус</h2>
+        <p>Для корпуса подойдёт пластик или можно распечатать на 3D принтере.</p>
+        <img src="data:image/jpeg;base64,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" alt="Case Assembly" height="300">
+      </div>
+      <div class="slide" id="slide4">
+        <h2>Ну вот и всё!</h2>
+        <p>Ваш Mini PC готов! 🚀</p>
+        <img src="error 404" alt="Finished Mini PC" height="300">
+      </div>
+      <div class="slide" id="slide5">
+        <h2>Ещё можно улучшить</h2>
+        <p>Можно добавить сенсорный экран или использовать Raspberry Pi.</p>
+        <p>Ещё можно сделать компактный корпус и хорошее охлаждение.</p>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw9MgtJl83rgaA-pZLIWVueFcecT7_WVvA6w&s" alt="Touch Screen" height="300">
+      </div>
+      <div class="navigation">
+        <button onclick="changeSlide(-1)">⬅ Назад</button>
+        <button onclick="changeSlide(1)">Вперёд ➡</button>
+      </div>
+    </div>
+    <script>
+      let currentSlide = 0;
+      const slides = document.querySelectorAll(".slide");
+
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.remove("active", "prev");
+          if (i === index) {
+            slide.classList.add("active");
+          } else if (i < index) {
+            slide.classList.add("prev");
+          }
+        });
+      }
+
+      function changeSlide(direction) {
+        slides[currentSlide].classList.remove("active");
+        currentSlide += direction;
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+        showSlide(currentSlide);
+      }
+
+      showSlide(currentSlide);
+    </script>
+  </body>
+</html>

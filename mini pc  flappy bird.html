@@ -1,0 +1,208 @@
+# By Kyrylo
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird and Mini pc</title>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: black;
+            color: rgb(0, 103, 247);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        button {
+            padding: 14px 28px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: rgb(0, 128, 255);
+            color: rgb(0, 0, 0);
+            border: 3px solid rgb(17, 0, 255);
+            border-radius: 12px;
+            transition: all 0.3s ease, transform 0.2s ease;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: rgb(0, 136, 255);
+            color: black;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgb(0, 179, 255);
+        }
+        button:active {
+            transform: scale(0.9);
+        }
+
+
+.button svg {
+  width: 1.6em;
+  margin: -0.2em 0.8em 1em;
+  position: absolute;
+  display: flex;
+  transition: all 0.6s ease;
+}
+
+.button:hover svg {
+  transform: translateX(5px);
+}
+
+.text {
+  margin: 0 1.5em
+}
+
+.loading-screen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+.pl,
+.pl__worm {
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+.pl {
+  animation-name: bump9;
+  animation-timing-function: linear;
+  width: 20em;
+  height: 20em;
+}
+
+.pl__ring {
+  stroke: hsla(var(--hue),10%,10%,0.1);
+  transition: stroke 0.3s;
+}
+
+.pl__worm {
+  animation-name: worm9;
+  animation-timing-function: cubic-bezier(0.42,0.17,0.75,0.83);
+}
+
+/* Animations */
+@keyframes bump9 {
+  from,
+  42%,
+  46%,
+  51%,
+  55%,
+  59%,
+  63%,
+  67%,
+  71%,
+  74%,
+  78%,
+  81%,
+  85%,
+  88%,
+  92%,
+  to {
+    transform: translate(0,0);
+  }
+
+  44% {
+    transform: translate(1.33%,6.75%);
+  }
+
+  53% {
+    transform: translate(-16.67%,-0.54%);
+  }
+
+  61% {
+    transform: translate(3.66%,-2.46%);
+  }
+
+  69% {
+    transform: translate(-0.59%,15.27%);
+  }
+
+  76% {
+    transform: translate(-1.92%,-4.68%);
+  }
+
+  83% {
+    transform: translate(9.38%,0.96%);
+  }
+
+  90% {
+    transform: translate(-4.55%,1.98%);
+  }
+}
+
+@keyframes worm9 {
+  from {
+    stroke-dashoffset: 10;
+  }
+
+  25% {
+    stroke-dashoffset: 295;
+  }
+
+  to {
+    stroke-dashoffset: 1165;
+  }
+}
+
+
+    </style>
+</head>
+
+<body>
+
+    <div class="loading-screen" id="loadingScreen">
+        <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+              <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="hsl(193,90%,55%)"></stop>
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)"></stop>
+              </linearGradient>
+          </defs>
+          <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round"></circle>
+          <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10"></path>
+      </svg>
+      </div>
+
+
+
+    <div class="list-container">
+        <h1>Flappy Bird Arduino</h1>
+        <h4>Welcome! In this project, we learned to create a simple but interesting game "Flappy Bird" on Arduino.</p>
+        <h4>This game is suitable for both beginners and more experienced electronics and programming enthusiasts.</p>
+        <h2>What We Need</h2>
+        <h4>1. Arduino UNO or another sum board</p>
+        <h4>2. Display (OLED or LCD) in this example we will use (LCD - 2004A - V1.3)</p>
+        <h4>3. Button</p>
+        <h4>4. Connecting wires</p>
+        <h4>5. Breadboard</p>
+        <h2>CODE</h2>
+        <button onclick="window.open('https://wokwi.com/projects/413462965320124417', '_blank')">Project Link on wokwi</button>
+        <h3>OR</h3>
+        <button onclick="window.open('flappy bird.html', '_blank')">➡Flappy Bird⬅</button>
+        <button onclick="window.open('mini pc.html', '_blank')">➡ Mini PC ⬅</button>
+    </div>
+
+    <script>
+              document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                document.getElementById("loadingScreen").style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById("loadingScreen").style.display = "none";
+                    document.getElementById("content").style.display = "block";
+                    document.getElementById("menu").style.display = "block";
+                }, 500);
+            }, 3200);
+        });
+    </script>
+
+</body>
+
+</html>

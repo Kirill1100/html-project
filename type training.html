@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Typing Training Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            color: #333;} #text-to-type {
+            font-size: 24px;
+            margin-bottom: 20px;
+            border: 3px solid #333;
+            border-radius: 5px;
+            padding: 10px;
+            width: 350px;
+            text-align: center;
+            background-color: #ffffff;} #user-input {
+            font-size: 24px;
+            width: 350px;
+            padding: 10px;
+            margin-bottom: 20px;} #result {
+            margin-top: 20px;
+            font-size: 20px;} #restart-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;} .keyboard {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);            gap: 10px;
+            margin-top: 20px;} .key {
+            padding: 15px;
+            background-color: #ddd;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 5px;} .key:hover {
+            background-color: #ccc;} #difficulty-select {
+            margin-bottom: 20px;
+            font-size: 16px;} </style>
+</head>
+<body>
+
+    <select id="difficulty-select">        <option value="easy">Легкий</option>
+        <option value="medium">Средний</option>
+        <option value="hard">Сложный</option>
+    </select>
+
+    <div id="text-to-type">Выберите сложность</div>
+    <input type="text" id="user-input" placeholder="Начните печатать..." disabled />
+    <div id="result"></div>
+    <button id="restart-button" style="display: none;">Начать заново</button>
+
+    <div class="keyboard" id="keyboard"></div>
+
+    <script>
+        const textToTypeElement = document.getElementById('text-to-type');        const userInput = document.getElementById('user-input');        const result = document.getElementById('result');        const restartButton = document.getElementById('restart-button');        const keyboard = document.getElementById('keyboard');        const difficultySelect = document.getElementById('difficulty-select');        let currentText = '';
+
+        const texts = {
+            easy:"Привет! Это легкий текст для печати.",            medium:"Это текст средней сложности для тренировки.",            hard:"Сложный текст для тех, кто хочет улучшить свои навыки набора текста."        };
+
+        function createKeyboard() {
+            const keys = [
+                'Qа', 'Wй', 'Eт', 'Rи', 'Tг', 'Yр', 'Uг', 'Iш', 'Oщ', 'Pз',
+                'Aа', 'Sй', 'Dл', 'Fе', 'Gв', 'Hр', 'Jо', 'Kл', 'Lд',
+                'Zя', 'Xч', 'Cс', 'Vм', 'Bи', 'Nт', 'Mь',
+                ' ', 'Backspace']; keys.forEach(key => {
+                const keyElement = document.createElement('div');                keyElement.innerText = key;
+                keyElement.classList.add('key');                keyElement.addEventListener('click', () => handleKeyClick(key));                keyboard.appendChild(keyElement);            });} function handleKeyClick(key) {
+            if (key === 'Backspace') {
+                userInput.value = userInput.value.slice(0, -1);} else {
+                userInput.value += key;} userInput.dispatchEvent(new Event('input'));} function startGame() {
+            const selectedDifficulty = difficultySelect.value;
+            currentText = texts[selectedDifficulty];            textToTypeElement.innerText = currentText;
+            userInput.value = '';
+            result.innerText = '';
+            userInput.disabled = false;
+            restartButton.style.display = 'none';
+            userInput.focus();} function endGame() {
+            userInput.disabled = true;
+            if (userInput.value === currentText) {
+                result.innerText ="Ай Тигр Ай Лев.";                result.style.color = 'green';} else {
+                result.innerText ="Попробуйте снова! Правильный текст:" + currentText;
+                result.style.color = 'red';} restartButton.style.display = 'block';} userInput.addEventListener('input', function () {
+            const inputText = userInput.value;
+            if (inputText === currentText) {
+                endGame();} else if (currentText.startsWith(inputText)) {
+                result.innerText ="мм норм...";                result.style.color = 'blue';} else {
+                result.innerText ="ГГГГррррр рав!";                result.style.color = 'red';} });        restartButton.addEventListener('click', startGame);        difficultySelect.addEventListener('change', startGame);        // Запускаем игру при загрузке страницы
+        window.onload = () => {
+            createKeyboard();            startGame();}; </script>
+
+</body>
+</html>

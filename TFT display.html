@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TFT 2.4" SPI</title>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: black;
+            color: red;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        .slide {
+            position: absolute;
+            width: auto;
+            opacity: 0;
+            transform: translateX(-100%);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .active {
+            opacity: 1;
+            transform: translateX(0);
+            position: relative;
+        }
+        .prev {
+            opacity: 0;
+            transform: translateX(0%);
+        }
+        .navigation {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        button {
+            padding: 14px 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: red;
+            color: white;
+            border: 3px solid darkred;
+            border-radius: 12px;
+            transition: all 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: red;
+            color: black;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px red;
+        }
+        button:active {
+            transform: scale(0.9);
+        }
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="slide active" id="slide1">
+            <h2>Что нужно?</h2>
+            <p>Вам понадобятся:</p>
+            <p>Arduino (Nano, Uno, Mega)</p>
+            <p>2.4" TFT SPI дисплей (240x320)</p>
+            <p>Соединительные провода</p>
+            <p>Кнопки (по желанию)</p>
+        </div>
+        <div class="slide" id="slide2">
+            <h2>Подключение дисплея</h2>
+            <p>Основные пины дисплея:</p>
+            <p>VCC → 5V</p>
+            <p>GND → GND</p>
+            <p>SCK → D13</p>
+            <p>MISO → D12</p>
+            <p>MOSI → D11</p>
+            <p>CS → D10</p>
+            <p>DC → D9</p>
+            <p>RST → D8</p>
+        </div>
+        <div class="slide" id="slide3">
+            <h2>Загрузка библиотеки</h2>
+            <p>Для работы с дисплеем установите:</p>
+            <p>Adafruit GFX</p>
+            <p>Adafruit ILI9341</p>
+            <p>SPI</p>
+            <p>Установите их через Arduino IDE → Библиотека</p>
+        </div>
+        <div class="slide" id="slide4">
+            <h2>Пример кода</h2>
+            <pre>
+#include &lt;Adafruit_GFX.h&gt;
+#include &lt;Adafruit_ILI9341.h&gt;
+#include &lt;SPI.h&gt;
+
+#define TFT_CS 10
+#define TFT_DC 9
+#define TFT_RST 8
+Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST);
+
+void setup() {
+    tft.begin();
+    tft.setRotation(3);
+    tft.fillScreen(ILI9341_BLUE);
+    tft.setTextColor(ILI9341_WHITE);
+    tft.setTextSize(2);
+    tft.setCursor(50, 100);
+    tft.println("Hello, Arduino!");
+}
+
+void loop() {}
+            </pre>
+        </div>
+        <div class="navigation">
+            <button onclick="changeSlide(-1)">⬅ Назад</button>
+            <button onclick="changeSlide(1)">Вперёд ➡</button>
+        </div>
+    </div>
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll(".slide");
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove("active", "prev");
+                if (i === index) slide.classList.add("active");
+                else if (i < index) slide.classList.add("prev");
+            });
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+            showSlide(currentSlide);
+        }
+    </script>
+</body>
+</html>

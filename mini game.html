@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flappy Bird Enhanced</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #1e1e1e;
+        color: #fff;
+        margin: 0;
+        overflow: hidden;
+      }
+      #restart-button, #jump-button {
+        position: absolute;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      #restart-button {
+        width: 200px;
+        height: 200px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #2e8631;
+        color: #fff;
+        display: none;
+      }
+      #restart-button:hover {
+        background-color: #3e8e41;
+      }
+      #jump-button {
+        bottom: 20px;
+        left: 20px;
+        width: 200px;
+        height: 200px;
+        font-size: 24px;
+        opacity: 0.1;
+      }
+      #jump-button:hover {
+        opacity: 0.1;
+        background-color: #a4a4a4;
+      }
+      .game-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+      .bird {
+        position: absolute;
+        width: 10px;
+        height: 40px;
+        background-color: blue;
+        border-radius: 50%;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="game-container">
+      <div class="bird"></div>
+      <canvas id="canvas"></canvas>
+    </div>
+    <button id="restart-button">Restart</button>
+    <button id="jump-button">Jump</button>
+    <script>
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      
+      let bird = { x: 100, y: 600, vy: 0, gravity: 0.7, size: 60 };
+      let pipes = [];
+      let clouds = [];
+      let score = 0;
+      let gameRunning = true;
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'lightblue';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = 'white';
+        clouds.forEach(cloud => ctx.fillRect(cloud.x, cloud.y, cloud.width, cloud.height));
+        
+        ctx.fillStyle = 'yellow';
+        ctx.fillRect(bird.x, bird.y, bird.size, bird.size);
+        
+        ctx.fillStyle = 'green';
+        pipes.forEach(pipe => {
+          ctx.fillRect(pipe.x, 0, pipe.width, pipe.y);
+          ctx.fillRect(pipe.x, pipe.y + pipe.gap, pipe.width, canvas.height - pipe.y - pipe.gap);
+        });
+
+        ctx.fillStyle = 'black';
+        ctx.font = '30px Arial';
+        ctx.fillText(`Score: ${score}`, 20, 50);
+      }
+
+      function update() {
+        if (!gameRunning) return;
+        bird.vy += bird.gravity;
+        bird.y += bird.vy;
+        
+        pipes.forEach((pipe, index) => {
+          pipe.x -= 4;
+          if (pipe.x < -pipe.width) {
+            pipes.splice(index, 1);
+            score++;
+          }
+        });
+        
+        if (Math.random() < 0.01) {
+          let x = canvas.width;
+          let y = Math.random() * (canvas.height - 400);
+          pipes.push({ x, y, width: 160, gap: 300 });
+        }
+        
+        clouds.forEach(cloud => {
+          cloud.x -= 2;
+          if (cloud.x < -cloud.width) cloud.x = canvas.width;
+        });
+
+        pipes.forEach(pipe => {
+          if (bird.x < pipe.x + pipe.width && bird.x + bird.size > pipe.x && 
+              (bird.y < pipe.y || bird.y + bird.size > pipe.y + pipe.gap)) {
+            gameRunning = false;
+            document.getElementById('restart-button').style.display = 'block';
+          }
+        });
+
+        draw();
+        requestAnimationFrame(update);
+      }
+
+      function keyDown(event) {
+        if (event.key === ' ') bird.vy = -10;
+      }
+
+      document.getElementById('jump-button').addEventListener('click', () => bird.vy = -10);
+      document.addEventListener('keydown', keyDown);
+
+      document.getElementById('restart-button').addEventListener('click', () => {
+        bird.y = 600;
+        bird.vy = 0;
+        pipes = [];
+        score = 0;
+        gameRunning = true;
+        document.getElementById('restart-button').style.display = 'none';
+        update();
+      });
+
+      update();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects Arduino</title>
+    <style>
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  font-family: "Arial", sans-serif;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #2658a3;
+  border: 2px solid #003078;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  top: 30%;
+  left: 100%;
+  margin-left: -100px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 30px;
+  left: 100px;
+  margin-left: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent #333333 transparent;
+}
+
+.tooltip .icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #2d89f9;
+  border: 2px #003078 solid;
+  color: #aae8ff;
+  border-radius: 100%;
+ 
+  text-align: center;
+  line-height: 20px;
+}
+
+
+
+      .loading-screen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+.pl,
+.pl__worm {
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+.pl {
+  animation-name: bump9;
+  animation-timing-function: linear;
+  width: 20em;
+  height: 20em;
+}
+
+.pl__ring {
+  stroke: hsla(var(--hue),10%,10%,0.1);
+  transition: stroke 0.3s;
+}
+
+.pl__worm {
+  animation-name: worm9;
+  animation-timing-function: cubic-bezier(0.42,0.17,0.75,0.83);
+}
+
+/* Animations */
+@keyframes bump9 {
+  from,
+  42%,
+  46%,
+  51%,
+  55%,
+  59%,
+  63%,
+  67%,
+  71%,
+  74%,
+  78%,
+  81%,
+  85%,
+  88%,
+  92%,
+  to {
+    transform: translate(0,0);
+  }
+
+  44% {
+    transform: translate(1.33%,6.75%);
+  }
+
+  53% {
+    transform: translate(-16.67%,-0.54%);
+  }
+
+  61% {
+    transform: translate(3.66%,-2.46%);
+  }
+
+  69% {
+    transform: translate(-0.59%,15.27%);
+  }
+
+  76% {
+    transform: translate(-1.92%,-4.68%);
+  }
+
+  83% {
+    transform: translate(9.38%,0.96%);
+  }
+
+  90% {
+    transform: translate(-4.55%,1.98%);
+  }
+}
+
+@keyframes worm9 {
+  from {
+    stroke-dashoffset: 10;
+  }
+
+  25% {
+    stroke-dashoffset: 295;
+  }
+
+  to {
+    stroke-dashoffset: 1165;
+  }
+}
+
+    body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient( #000000, #000000);
+        color: rgb(60, 73, 255);
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        transition: background 0.3s, color 0.3s;
+    }
+    .menu {
+        width: 250px;
+        height: 100vh;
+        background: linear-gradient(135deg, #2bbfff, #024dbc);
+        position: fixed;
+        left: -250px;
+        top: 0;
+        transition: left 0.3s;
+        padding-top: 60px;
+        box-shadow: 5px 0 10px rgba(100, 120, 255, 0.5);
+    }
+    .menu a {
+        display: block;
+        padding: 15px;
+        text-decoration: none;
+        color: white;
+        font-size: 18px;
+        transition: 0.10s;
+        font-weight: bold;
+        text-transform: uppercase ;
+    }
+    .menu a:hover {
+        background: linear-gradient(135deg, #39bdff, #243d95);
+        color: rgb(156, 229, 255);
+        letter-spacing: 1px;
+        border-radius: 5px;
+        padding-left: 20px;
+    }
+    .menu-toggle {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #1cc2f9, #3668ff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        color: white;
+        cursor: pointer;
+        transition: left 0.3s;
+        border-radius: 0 10px 10px 0;
+    }
+      .menu-toggle:hover ~ .menu,
+      .menu:hover {
+        left: 0;
+      }
+      .menu:hover ~ .menu-toggle,
+      .menu-toggle:hover {
+        left: 250px;
+      }
+      .content {
+        padding: 20px;
+        max-width: 800px;
+        margin: auto;
+        color: white;
+        text-align: left;
+      }
+      .visit-counter {
+        position: fixed;
+        top: 10px;
+        right: 15px;
+        background: linear-gradient(135deg, #02cdc6, #395dc0);
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-size: 10px;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    
+
+    <div class="tooltip">
+      <div class="icon">i</div>
+      <div class="tooltiptext"># By Kirilo</div>
+    </div>
+    
+
+    <div class="loading-screen" id="loadingScreen">
+      <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="hsl(193,90%,55%)"></stop>
+                <stop offset="100%" stop-color="hsl(223,90%,55%)"></stop>
+            </linearGradient>
+        </defs>
+        <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round"></circle>
+        <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10"></path>
+    </svg>
+    </div>
+    <h1>Arduino projects</h1>
+    <div class="menu-toggle">☰</div>
+    <div class="menu" id="menu">
+      <a href="mini pc  flappy bird.html" target="_blank">mini pc and flappy bird on arduino</a>
+      <a href="lode runner.html" target="_blank">lode runner on arduino</a>
+      <a href="TFT display.html" target="_blank">TFT Display</a>
+      <a href="mini game.html" target="_blank"> Mini Game not Finished</a>
+      <a href="type training.html" target="_blank"> Type Training Not Finished</a>
+      <a href="uk.html" target="_blank">per tedesco</a>
+    </div>
+    <div class="content">
+      <h2>Как программировать Arduino</h2>
+      <h4>1. Скачайте и установите <a href="https://www.arduino.cc/en/software" target="_blank">Arduino IDE</a>.</h4>
+      <h4>2. Подключите плату Arduino к компьютеру с помощью USB-кабеля.</h3>
+      <h4>3. Откройте Arduino IDE, выберите свою плату в "Инструменты" → "Плата".</h3>
+      <h4>4. Выберите соответствующий порт в "Инструменты" → "Порт".</h3>
+      <h4>5. Напишите или откройте код, затем нажмите "Загрузить" (кнопка со стрелкой вправо).</h3>
+      <h4>6. Дождитесь завершения загрузки, затем наблюдайте за работой программы на Arduino!</h3>
+    </div>
+    <div class="visit-counter" id="visitCounter">Посещений: 0</div>
+    <script>
+
+
+
+      document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                document.getElementById("loadingScreen").style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById("loadingScreen").style.display = "none";
+                    document.getElementById("content").style.display = "block";
+                    document.getElementById("menu").style.display = "block";
+                }, 500);
+            }, 3200);
+        });
+
+
+      
+      document.addEventListener("DOMContentLoaded", () => {
+        let visits = localStorage.getItem("visitCount");
+        visits = visits ? parseInt(visits) + 1 : 1;
+        localStorage.setItem("visitCount", visits);
+        document.getElementById("visitCounter").textContent = `Посещений: ${visits}`;
+      });
+    </script>
+  </body>
+</html>
